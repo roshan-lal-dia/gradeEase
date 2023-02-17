@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../haptics.js"></script>
+
+    <style>
+	*{
+    margin: 0px;
+    background-color: aqua;
+}
+
+#head{
+    height: 50px;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    color: aqua;
+    background-color: black;
+    text-align: center;
+}
+.headbutton{
+    width:32%;
+    height: 40px;
+    padding: 10px;
+}
+#foot{
+    position: fixed;
+    height: 60px;
+    text-align: center;
+    color: aliceblue;
+    bottom: 0px;
+    background-color:aquamarine;
+    width: 100%;
+}
+#demo{
+    text-align: center;
+    position: relative;
+    top: 60px;
+    font-size: 2rem;
+    padding: 10px;
+    background-color: black;
+    color: aqua;
+    position: relative;
+    
+}
+#module{
+    position: relative;
+    top: 70px;
+    text-align: center;
+    color: aqua;
+    background-color: black;
+    font-size: 2rem;
+    padding: 10px;
+}
+#question{
+    
+    text-align: center;
+    font-size: 2rem;
+    position: relative;
+    top: 80px;
+    padding: 10px;
+}
+
+#submit{
+    position: relative;
+    top: 100px;
+    text-align: center;
+    background-color: black;
+    color: aqua;
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+
+}
+.choices{
+    position: relative;
+    top: 100px;
+    height: 40px;
+    width:300px;
+    text-align: center;
+    font-size: 20px;
+    top: 100px;
+    padding: px;
+    margin-top: 10px;
+    font-weight: bolder;
+    border: 4px solid black;
+
+}
+
+.button{
+            font-size: 25px;
+            color: white;
+            background-color: black;
+            position: relative;
+            margin-top: 30px;
+            margin-bottom: 6px;
+            height: 80px;
+            width: 250px;
+            border-radius:2px solid white
+        }
+.Options{
+    padding-bottom: 50px;
+}
+#extra{
+    height: 100px;
+    width: 100%;
+}
+#previous{
+    width:45%;
+    height: 50px;
+    font-size: 25px;
+    background-color: red;
+    color: aliceblue;
+    border: 4px solid white;
+}
+#next{
+    width: 45%;
+    height: 50px;
+    font-size: 25px;
+    background-color: red;
+    color: aliceblue;
+    border: 4px solid white;
+}
+#image{
+    height: 200px;
+    width: 200px;
+}
+.buttons{
+    height: 50px;
+    width:200px;
+    font: size 15px;
+    
+    border: 4px solid black;
+
+}
+</style>
+    <title>GradeEase</title>
+    <script>
+        var previous='';
+        console.log(previous)
+
+        function Speak(id)
+        {
+        const synth = window.speechSynthesis;
+        let ourText = document.getElementById(id).innerHTML;
+        const utterThis = new SpeechSynthesisUtterance(ourText);
+        synth.speak(utterThis);
+    
+}
+function SpeechRecog(){
+    var output = document.getElementById("output");
+
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var recognition = new SpeechRecognition();
+
+    recognition.onstart = function() {
+        setInterval( recognition.stop(), 1000)
+    };
+    
+    recognition.onresult = function(event) {
+        var transcript = event.results[0][0].transcript;
+        output.innerHTML = transcript;
+        output.classList.remove("hide");
+    };
+    recognition.start();
+
+};
+
+let current;
+        const ids =['demo','module','general-question', 'image','for-example',"graph-explaination",
+        "para-1","para-2",'extra'
+    ];
+        
+        let i=0;
+        
+        function next(id){
+
+                current=ids[i]
+                i+=1;
+                Speak(current);
+                    
+                }
+        function previouse(id){
+            
+                i-=1;
+
+                if(i<0){
+                    Speak('no')
+
+                }
+                else{
+                    current=ids[i]
+                    console.log(i)
+                    Speak(current);
+                }
+               
+                    
+                }
+        
+        
+    </script>
+</head>
+<body id="body">
+    <header id="head">
+        <button class="headbutton" onclick="Back()">Back</button>
+            <button class="headbutton" onclick= "Pause()">Pause</button>
+            <button class="headbutton" onclick= "Play()">Play</button>
+            <p id="no" visibility="hidden"  >
+                There is no previous pages
+            </p>
+            
+    </header>
+    
+    <div >
+        <h2 id="demo" onclick="Speak(id)">Demo</h2>
+        <h3 id="module" onclick="Speak(id)">Module</h3>
+        <div id="question" >
+            <div >
+            <p id="general-question" onclick="Speak(id)">Todays world Data is the greatest asset. Asset i n the sense, it could be used to predict the future and manageproblems in future. But today digital data generation is far more exceedes 
+                the production of data storage devices. It could be inferredfrom the graph given below
+                </p><br><br>
+                <img id='image' src="./graph.jpeg" alt="demo-graph"><br><br>
+            <p id="for-example" onclick="Speak(id)">The data values are represented in zetabytes.
+                One billion terabyte = 1 zetabyte
+                one Terabyte = 1000 Giga bytes</p><br><br>
+                <button class = "buttons" onclick="graphNeeded()">Capacity of data generated</button> <br />
+                <button class = "buttons" onclick="graphCapacity()">Production of data storage devices</button> 
+    
+        </div>
+        <br><br>
+        <div id="graph-explaination" onclick="Speak(id)">Till 2005, the data storage devices are more sufficient and the data generation is lesser than the production. In 2005 it is in threshold (that is, both of them are in same level). 
+            <p id = "para-1" onclick="Speak(id)">
+                Upto 2011
+                both the capacitors travel in back and forth manner. After 2012 onwards the need of storage units exceeds the available produced capacity. In numerical representation the capacity needed 
+                    is about 4 zetabytes but the capacity produced is about only 3 zetabytes.</p>
+            <p id = "para-2" onclick="Speak(id)">
+            There is a thremendrous need of storage device mean while the need of available source is very limited. As per survey rated from 2017, the storage units needed is about 16 zetabytes, provided the available 
+            storage is about 5 zetabyte only. </p></div>
+<br />
+        <br />
+        <br />
+    <footer id="foot">
+        <button id="previous" onclick="previouse()">Previous</button> 
+        <button id="next" onclick="next()">Next</button>
+    </footer>
+    <script>
+
+function graphNeeded() {
+            Haptics.vibrate([1000, 1000, 1000, 1000, 980, 950, 980, 920, 830, 800, 730, 750, 740, 700, 680, 630, 660, 600, 640, 570, 620, 530, 580, 480, 470, 430, 400, 380, 370, 350, 340, 310, 280, 240, 250, 220, 210, 180, 175, 165, 143, 121, 111, 89, 76,67, 59, 43, 32, 21, 10, 8, 6, 4, 2]);
+            
+        };
+
+        function graphCapacity() {
+            Haptics.vibrate([1000, 1000, 1000, 1000, 980, 950, 980, 920, 850, 900, 820, 960, 800, 900, 780, 870, 750, 830, 730, 830, 700, 830, 680, 800, 660, 800, 640, 800, 620, 800, 660]);
+        };
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+      <title>haptics.js</title>
+      <meta name="description" content="Run tests for the haptics.js JavaScript library.">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <script type="text/javascript" src="../haptics.js"></script>
+  </head>
+  <body>
+
+    <style>
+        .button{
+            font-size: 20px;
+            color: white;
+            background-color: black;
+            position: relative;
+            margin-top: 10px;
+            border-radius:2px solid white
+        }
+    </style>
+    <!--Top Header Escape Pause / play-->
+    <div class="header">
+        
+        <button class= "button" onclick= "Pause()" ondblclick="Play()">Pause / Play</button> <br>
+
+    
+    </div>
+
+
+  <div class="container">
+    <button class= "button" onclick= "ShapOFYou()">Shape of You</button> <br>
+
+    <h1 style="text-align:center">Grade-Ease</h1>
+    <p>If you feel one one long vibration  </p>
+
+    <button class= "button" onclick= "Long()">Long</button> <br>
+    <button class= "button" onclick= "twoLong()"> Long + Long</button> <br>
+
+    <button class= "button" onclick= "short()">Short</button> <br>
+
+    <!--demo-->
+    <button class= "button" onclick= "longShort()"> Long +Short</button> <br>
+
+    <button class= "button" onclick= "FourtyFive()">Long + Long + Long + Long + Short</button> <br>
+    
+
+    <!-- options-->
+    <button class= "button" onclick= "setTimeout(ThirtyFive, 1000)" ondblclick ="check('1')">Option 1</button> <br>
+    <button class= "button" onclick= "setTimeout(Thirty, 1000)" ondblclick ="check('2')" >Option 2</button> <br>
+    <button class= "button" onclick= "setTimeout(FourtyFive, 1000)" ondblclick ="check('3')">Option 3</button> <br>
+    <button class= "button" onclick= "setTimeout(Fifty, 1000)" ondblclick ="check('4')">Option 4</button> <br>
+
+  <script>
+    //@desc test timer
+
+//@desc trying to delay events
+//delay button clicks
+
+
+//@desc Global Pause
+//@calls pauseText
+//@calls PlayCustomPattern for Pause
+function Pause(){
+  //window.speechSynthesis.pause();
+  Haptics.vibrate([250, 50, 250]);
+}
+
+function Play(){
+  //playText();
+  Haptics.vibrate([250, 50]);
+}
+
+//@desc play Correct music
+function PlayCorrectMusic(){
+    let audio = new Audio("Correct.mp3");
+    audio.play();
+}
+
+//@desc play wrong music
+function PlayWrongMusic(){
+        let audio = new Audio("Wrong.mp3");
+        audio.play();
+    };       
+   // let audio = new Audio("Wrong.mp3");
+    //audio.play();
+
+//@desc custom standard
+ const long =function Long() { 
+    Haptics.vibrate(1000);
+};
+function short() { 
+    Haptics.vibrate(250);
+};
+
+//@checking patterns
+function ShapOFYou() { 
+    Haptics.vibrate([500, 250, 500, 250, 500, 250, 500, 250]);
+    
+};
+
+//demo
+function twoLong() { 
+    Haptics.vibrate([1000, 250, 1000]);
+};
+function longShort() { 
+    Haptics.vibrate([1000, 250, 250]);
+};
+
+//@desc checking corect option
+function check(option) {
+    switch(option) {
+        case '1':
+        PlayWrongMusic();
+            break;
+        case '2':
+        PlayWrongMusic();
+            break;
+        case '3':
+            //alert('correct');
+            PlayCorrectMusic();
+            break;
+        case '4':
+        PlayWrongMusic();
+            break;
+        default:
+            alert('Select an option');
+    }
+    
+}
+
+//option
+function ThirtyFive() { 
+    Haptics.vibrate([1000, 250, 1000, 250, 1000, 250, 250]);
+};
+function Thirty() { 
+    Haptics.vibrate([1000, 250, 1000, 250, 1000]);
+};
+function FourtyFive() { 
+    Haptics.vibrate([1000, 250, 1000, 250, 1000, 250, 1000, 250, 250]);
+};
+function Fifty() { 
+    Haptics.vibrate([1000, 250, 1000, 250, 1000, 250, 1000, 250, 1000]);
+};
+
+
+function graphNeeded() {
+            Haptics.vibrate([1000, 1000, 1000, 1000, 980, 950, 980, 920, 830, 800, 730, 750, 740, 700, 680, 630, 660, 600, 640, 570, 620, 530, 580, 480, 470, 430, 400, 380, 370, 350, 340, 310, 280, 240, 250, 220, 210, 180, 175, 165, 143, 121, 111, 89, 76,67, 59, 43, 32, 21, 10, 8, 6, 4, 2]);
+            
+        };
+
+        function graphCapacity() {
+            Haptics.vibrate([1000, 1000, 1000, 1000, 980, 950, 980, 920, 850, 900, 820, 960, 800, 900, 780, 870, 750, 830, 730, 830, 700, 830, 680, 800, 660, 800, 640, 800, 620, 800, 660]);
+        };
+  </script>
+  </body>
+</html>

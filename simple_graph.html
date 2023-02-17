@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="../haptics.js"></script>
+
+    <style>
+	*{
+    margin: 0px;
+    background-color: aqua;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+#head{
+    height: 50px;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    color: aqua;
+    background-color: black;
+    text-align: center;
+}
+
+#foot{
+    position: fixed;
+    height: 60px;
+    text-align: center;
+    color: aliceblue;
+    bottom: 0px;
+    background-color:aquamarine;
+    width: 100%;
+}
+#demo{
+    text-align: center;
+    position: relative;
+    top: 10px;
+    font-size: 3rem;
+    padding: 10px;
+    height: 50px;
+    background-color: black;
+    color: aqua;
+    position: relative;
+    
+}
+#module{
+    position: relative;
+    top: 40px;
+    text-align: center;
+    color: aqua;
+    background-color: black;
+    font-size: 2rem;
+    padding: 10px;
+}
+#question{
+    
+    text-align: center;
+    font-size: 2rem;
+    position: relative;
+    top: 80px;
+    padding: 10px;
+}
+
+#submit{
+    position: relative;
+    top: 100px;
+    border-radius: 3px solid white;
+    text-align: center;
+    background-color: black;
+    color: aqua;
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+
+}
+.choices{
+    position: relative;
+    top: 100px;
+    height: 40px;
+    width:300px;
+    text-align: center;
+    font-size: 20px;
+    top: 100px;
+    padding: px;
+    margin-top: 10px;
+    font-weight: bolder;
+    border: 4px solid black;
+
+}
+
+#graph_b{
+            font-size: 30px;
+            color: white;
+            background-color: rgb(0, 0, 0);
+            position: relative;
+            margin-top: 30px;
+            margin-bottom: 6px;
+            height: 80px;
+            width: 250px;
+            border:5px solid white
+        }
+.Options{
+    padding-bottom: 50px;
+}
+#extra{
+    height: 100px;
+    width: 100%;
+}
+#previous{
+    width:45%;
+    height: 50px;
+    font-size: 25px;
+    background-color: red;
+    color: aliceblue;
+    border: 4px solid white;
+}
+#next{
+    width: 45%;
+    height: 50px;
+    font-size: 25px;
+    background-color: red;
+    color: aliceblue;
+    border: 4px solid white;
+}
+#image{
+    height: 300px;
+    width: 400px;
+}
+
+</style>
+    <title>GradeEase</title>
+    <script>
+        var previous='';
+        console.log(previous)
+
+        function Speak(id)
+        {
+        const synth = window.speechSynthesis;
+        let ourText = document.getElementById(id).innerHTML;
+        const utterThis = new SpeechSynthesisUtterance(ourText);
+        synth.speak(utterThis);
+    
+}
+function SpeechRecog(){
+    var output = document.getElementById("output");
+
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var recognition = new SpeechRecognition();
+
+    recognition.onstart = function() {
+        setInterval( recognition.stop(), 1000)
+    };
+    
+    recognition.onresult = function(event) {
+        var transcript = event.results[0][0].transcript;
+        output.innerHTML = transcript;
+        output.classList.remove("hide");
+    };
+    recognition.start();
+
+};
+
+let current;
+        const ids =['demo','module','general-question', 'image','for-example',"graph-explaination",
+        "para-1","para-2",'extra'
+    ];
+        
+        let i=0;
+        
+        function next(id){
+
+                current=ids[i]
+                i+=1;
+                Speak(current);
+                    
+                }
+        function previouse(id){
+            
+                i-=1;
+
+                if(i<0){
+                    Speak('no')
+
+                }
+                else{
+                    current=ids[i]
+                    console.log(i)
+                    Speak(current);
+                }
+               
+                    
+                }
+        
+        
+    </script>
+</head>
+<body id="body">
+  
+    </header>
+    
+    <div >
+        <h2 id="demo" onclick="Speak(id)">Demo</h2>
+        <h3 id="module" onclick="Speak(id)">Module</h3>
+        <div id="question" >
+            <div >
+            <p id="general-question" onclick="Speak(id)">
+                It is a Simple Linear Graph
+                </p><br><br>
+                <img id='image' src="./linear_graph.png" alt="demo-graph"><br><br>
+            <p id="for-example" onclick="Speak(id)">
+                The linear graph is a graph in which the data points are plotted on a graph in a straight line.
+                For understanding touch the below button it will show the  linear graph is in the format.
+                </p><br><br>
+                <button id= "graph_b" onclick="graphCapacity() ">
+                    Graph
+                </button> <br />
+         
+    
+        </div>
+        <br><br>
+        <div id="graph-explaination" onclick="Speak(id)">
+            <p id = "para-1" onclick="Speak(id)">
+
+            </p>
+            <p id = "para-2" onclick="Speak(id)">
+                
+            </p></div>
+<br />
+        <br />
+        <br />
+    <footer id="foot">
+        <button id="previous" onclick="previouse()">Previous</button> 
+        <button id="next" onclick="next()">Next</button>
+    </footer>
+    <script>
+
+function graphNeeded() {
+    Speak(graph_b)
+            Haptics.vibrate([1000, 1000, 1000, 240, 250, 220, 210, 180, 175, 165, 143, 121, 111, 89, 76,67, 59, 43, 32, 21, 10, 8, 6, 4, 2]);
+            
+        };
+
+        function graphCapacity() {
+            var graphPoints = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+            var timePoints = [100,200,300,400,500,600,700,800,900,1000];
+            Haptics.vibrate(graphPoints,timePoints);
+        };
+        
+
+</script>
+</body>
+</html>
